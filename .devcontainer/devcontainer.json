@@ -1,0 +1,24 @@
+{
+  "name": "Minikube Dev Container",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu", // Or any Ubuntu-based dev container image
+
+  "forwardPorts": [8001, 5000],
+
+  "postCreateCommand": "/bin/bash .devcontainer/startup_script.sh",
+  "postAttachCommand": "minikube start",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "hashicorp.terraform",
+        "ms-kubernetes-tools.vscode-kubernetes-tools"
+      ]
+    }
+  },
+  "hostRequirements": {
+    "cpus": 4,
+    "memory": "8gb",
+    "storage": "32gb"
+  }
+}
+
