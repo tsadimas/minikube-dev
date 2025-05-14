@@ -1,12 +1,14 @@
-#!/usr/bin/bash
+#!/bin/bash
+set -e
 
+# Install Minikube and dependencies
+echo "Installing Minikube and dependencies..."
+sudo apt-get update && sudo apt-get install -y curl conntrack
+curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+chmod +x minikube
+sudo mv minikube /usr/local/bin/
 
-sudo git clone https://github.com/ahmetb/kubectx /opt/kubectx
-sudo ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
-sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
-brew install derailed/k9s/k9s
+# Start Minikube using the "none" driver
+echo "Starting Minikube..."
+sudo minikube start --driver=docker || true
 
-echo "✅ kubectx, kubens, fzf, and k9s installed successfully"
-sudo apt-get install fzf -y
-
-source ~/.bashrc 
