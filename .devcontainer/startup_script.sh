@@ -1,36 +1,27 @@
 #!/bin/bash
 set -e
 
+export DEBIAN_FRONTEND=noninteractive
 
+# Install dependencies
 sudo apt-get update
+sudo apt-get install -y curl conntrack
 
-sudo apt-get install -y kubectl
+# Install kubectl
+echo "Installing kubectl..."
+curl -LO "https://dl.k8s.io/release/$(curl -Ls https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+chmod +x kubectl
+sudo mv kubectl /usr/local/bin/
 
-# Add Docker's official GPG key:
-sudo apt-get update
-sudo apt-get install ca-certificates curl
-sudo install -m 0755 -d /etc/apt/keyrings
-sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-sudo chmod a+r /etc/apt/keyrings/docker.asc
-
-# Add the repository to Apt sources:
-echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
-  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-sudo apt-get update
-
-
-# Install Minikube and dependencies
-echo "Installing Minikube and dependencies..."
-sudo apt-get update && sudo apt-get install -y curl conntrack
+# Install Minikube
+echo "Installing Minikube..."
 curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
 chmod +x minikube
 sudo mv minikube /usr/local/bin/
 
+# Start Minikube using Docker (socket is mounted from host)
+echo "Starting Minikube with Docker driver..."
+minikube start --driver=docker
 
-sudo service docker start
-# Start Minikube using the "none" driver
-echo "Starting Minikube..."
-minikube start –driver=docker
-
+# Optionally alias kubectl
+echo "alias kubectl='minikube kubectl --'" >> ~/.bashrc

@@ -1,11 +1,18 @@
 {
   "name": "Minikube Dev Container",
-  "image": "mcr.microsoft.com/devcontainers/base:ubuntu", // Or any Ubuntu-based dev container image
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+
+  "mounts": [
+    {
+      "source": "/var/run/docker.sock",
+      "target": "/var/run/docker.sock",
+      "type": "bind"
+    }
+  ],
 
   "forwardPorts": [8001, 5000],
 
   "postCreateCommand": "/bin/bash .devcontainer/startup_script.sh",
-  "postAttachCommand": "minikube start",
 
   "customizations": {
     "vscode": {
@@ -21,4 +28,3 @@
     "storage": "32gb"
   }
 }
-
