@@ -1,7 +1,11 @@
 {
   "name": "Minikube Dev Container",
- "image": "ghcr.io/devcontainers/features/docker-in-docker:debian",
-
+ "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+"features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "version": "latest"
+    }
+  },
   "mounts": [
     {
       "source": "/var/run/docker.sock",
