@@ -1,6 +1,6 @@
 {
   "name": "Minikube Dev Container",
-  "image": "mcr.microsoft.com/devcontainers/docker:ubuntu",
+ "image": "ghcr.io/devcontainers/features/docker-in-docker:debian",
 
   "mounts": [
     {
