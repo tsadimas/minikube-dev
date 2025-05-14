@@ -10,5 +10,5 @@ sudo mv minikube /usr/local/bin/
 
 # Start Minikube using the "none" driver
 echo "Starting Minikube..."
-sudo minikube start --driver=docker || true
+sudo minikube start
 
